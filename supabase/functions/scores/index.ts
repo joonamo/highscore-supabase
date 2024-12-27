@@ -6,6 +6,8 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import express from "npm:express@4.21.2";
 import bodyParser from "npm:body-parser@1.20.3";
+import cors from "npm:cors@2.8.5"
+
 import {
   getDistinctScores,
   getDistinctScoresPerPlayer,
@@ -16,6 +18,7 @@ import {
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors())
 
 const port = 3000;
 
