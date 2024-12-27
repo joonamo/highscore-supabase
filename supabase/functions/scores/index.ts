@@ -22,7 +22,7 @@ app.use(cors())
 
 const port = 3000;
 
-app.get("/scores/:gameId/scores", async (req, res) => {
+app.get("/game/:gameId/scores", async (req, res) => {
   const gameId = req.params["gameId"];
   const { distinct, perPlayer, count } = req.query;
   const query = distinct
