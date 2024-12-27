@@ -15,6 +15,14 @@ export interface ScoreEntry {
   meta: unknown;
 }
 
+export interface Game {
+  id: string
+  created: string
+  name: string
+  secret: string
+  strictValidation: boolean
+}
+
 export interface ScorePost extends Omit<ScoreEntry, "id"> {
   validation: string;
 }
@@ -92,3 +100,25 @@ export const getDistinctScoresPerPlayer = async (
   `;
   return fixDbOutput(result.rows);
 };
+
+export const persistScore = async (gameId: string, player: string, score: number, meta: unknown) => {
+  console.log("Saving score", {gameId, player, score, meta}) 
+  const connection = await dbPool.connect();
+
+  await connection.queryObject`
+    INSERT INTO scores (game_id, player, score, meta)
+    VALUES (${gameId}, ${player}, ${score}, ${meta});
+  `
+}
+
+export const getGameById = async (id: string): Promise<Game> => {
+  const connection = await dbPool.connect();
+
+  const result = await connection.queryObject<Game>`
+    SELECT id, created, name, secret, strict_validation as "strictValidation"
+    FROM games
+    WHERE id = ${id}
+  `
+
+  return result.rows[0];
+}
