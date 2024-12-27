@@ -250,7 +250,7 @@ policy = "oneshot"
 inspector_port = 8083
 
 # Use these configurations to customize your Edge Function.
-[functions.scores]
+[functions.game]
 enabled = true
 verify_jwt = true
 # import_map = "./functions/MY_FUNCTION_NAME/deno.json"
